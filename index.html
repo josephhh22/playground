@@ -18,6 +18,8 @@
             --line: #e8e2de;
             --accent: #d6336c;
             --accent-soft: #fde8ef;
+            --timeline: #2563eb;
+            --timeline-idle: #bdb6b2;
             --radius: 14px;
         }
         @media (prefers-color-scheme: dark) {
@@ -29,6 +31,8 @@
                 --line: #2f2a2b;
                 --accent: #f06595;
                 --accent-soft: #3a1f29;
+                --timeline: #60a5fa;
+                --timeline-idle: #5c5456;
             }
         }
         :root[data-theme="dark"] {
@@ -39,6 +43,8 @@
             --line: #2f2a2b;
             --accent: #f06595;
             --accent-soft: #3a1f29;
+            --timeline: #60a5fa;
+            --timeline-idle: #5c5456;
         }
 
         * { box-sizing: border-box; }
@@ -106,6 +112,25 @@
         .job ul { margin: 8px 0 0; padding-left: 18px; }
         .job li { margin-bottom: 4px; }
 
+        /* Timeline: dotted rail between roles fills solid as you scroll */
+        .timeline { position: relative; --rail-x: 174px; --rail-top: 0px; --rail-h: 0px; --fill: 0px; }
+        .timeline .job { column-gap: 48px; position: relative; }
+        .timeline .job::before {
+            content: ""; position: absolute; z-index: 1;
+            left: calc(var(--rail-x) - 6px); top: 5px; width: 12px; height: 12px;
+            border-radius: 50%; background: var(--bg); border: 2px solid var(--timeline-idle);
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .timeline .job.reached::before { background: var(--timeline); border-color: var(--timeline); }
+        .timeline-rail, .timeline-fill {
+            position: absolute; left: calc(var(--rail-x) - 1.5px); top: var(--rail-top); width: 3px;
+        }
+        .timeline-rail {
+            height: var(--rail-h);
+            background: radial-gradient(circle, var(--timeline-idle) 1.5px, transparent 1.6px) 0 0 / 3px 8px repeat-y;
+        }
+        .timeline-fill { height: var(--fill); background: var(--timeline); border-radius: 2px; }
+
         /* Skills */
         .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
         .skill-group h3 { font-size: 0.95rem; margin: 0 0 10px; }
@@ -167,12 +192,14 @@
         @media (max-width: 600px) {
             header { padding-top: 32px; }
             .job { grid-template-columns: 1fr; }
+            .timeline { --rail-x: 6px; }
+            .timeline .job { padding-left: 28px; }
         }
 
         /* Print: Ctrl/Cmd+P gives a clean one-column resume */
         @media print {
             :root { --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #ccc; --accent: #000; --accent-soft: #eee; }
-            nav, .filters, #portfolio .grid, .no-print { display: none !important; }
+            nav, .filters, #portfolio .grid, .no-print, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
             .print-only { display: block !important; }
             section { padding-top: 16px; break-inside: avoid; }
             a { color: #000; }
@@ -224,36 +251,41 @@
     <section id="experience">
         <h2>Experience</h2>
 
-        <div class="job">
-            <div class="when">2024 – Present</div>
-            <div>
-                <h3>Founder <span class="org">· A Bead of Fun</span></h3>
-                <ul>
-                    <li>Designed and produced a catalogue of 13 bead art products, from characters to custom name pieces.</li>
-                    <li>Built and ran the shop website on GitHub Pages, including product photography and copy.</li>
-                    <li>Handled pricing, custom orders and customer messages end to end.</li>
-                </ul>
-            </div>
-        </div>
+        <div class="timeline">
+            <div class="timeline-rail" aria-hidden="true"></div>
+            <div class="timeline-fill" aria-hidden="true"></div>
 
-        <div class="job">
-            <div class="when">2022 – 2024</div>
-            <div>
-                <h3>Job Title <span class="org">· Company Name</span></h3>
-                <ul>
-                    <li>Start each point with a verb and end it with a number or outcome.</li>
-                    <li>Keep to three or four points per role.</li>
-                </ul>
+            <div class="job">
+                <div class="when">2024 – Present</div>
+                <div>
+                    <h3>Founder <span class="org">· A Bead of Fun</span></h3>
+                    <ul>
+                        <li>Designed and produced a catalogue of 13 bead art products, from characters to custom name pieces.</li>
+                        <li>Built and ran the shop website on GitHub Pages, including product photography and copy.</li>
+                        <li>Handled pricing, custom orders and customer messages end to end.</li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="job">
-            <div class="when">2020 – 2022</div>
-            <div>
-                <h3>Job Title <span class="org">· Company Name</span></h3>
-                <ul>
-                    <li>What you did, and what changed because of it.</li>
-                </ul>
+            <div class="job">
+                <div class="when">2022 – 2024</div>
+                <div>
+                    <h3>Job Title <span class="org">· Company Name</span></h3>
+                    <ul>
+                        <li>Start each point with a verb and end it with a number or outcome.</li>
+                        <li>Keep to three or four points per role.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="when">2020 – 2022</div>
+                <div>
+                    <h3>Job Title <span class="org">· Company Name</span></h3>
+                    <ul>
+                        <li>What you did, and what changed because of it.</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </section>
@@ -391,6 +423,31 @@
         box.showModal();
     }));
     box.addEventListener('click', () => box.close());
+
+    // Timeline: fill the rail up to a line 60% down the viewport
+    const timeline = document.querySelector('.timeline');
+    if (timeline) {
+        const jobs = [...timeline.querySelectorAll('.job')];
+        const dotOffset = 11; // centre of the .job::before dot
+        let railTop = 0, railLength = 0;
+        const update = () => {
+            const marker = innerHeight * 0.6 - timeline.getBoundingClientRect().top;
+            const fill = Math.min(Math.max(marker - railTop, 0), railLength);
+            timeline.style.setProperty('--fill', fill + 'px');
+            jobs.forEach(j => j.classList.toggle('reached', j.offsetTop + dotOffset - railTop <= fill + 0.5));
+        };
+        const measure = () => {
+            railTop = jobs[0].offsetTop + dotOffset;
+            railLength = jobs[jobs.length - 1].offsetTop - jobs[0].offsetTop;
+            timeline.style.setProperty('--rail-top', railTop + 'px');
+            timeline.style.setProperty('--rail-h', railLength + 'px');
+            update();
+        };
+        addEventListener('scroll', update, { passive: true });
+        addEventListener('resize', measure);
+        document.fonts.ready.then(measure); // web fonts can shift the layout
+        measure();
+    }
 </script>
 
 </body>
