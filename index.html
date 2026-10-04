@@ -16,9 +16,9 @@
             --text: #1d1b1a;
             --muted: #6b6461;
             --line: #e8e2de;
-            --accent: #d6336c;
-            --accent-soft: #fde8ef;
-            --timeline: #2563eb;
+            --accent: #2563eb;
+            --accent-soft: #e3ebfd;
+            --timeline: var(--accent);
             --timeline-idle: #bdb6b2;
             --radius: 14px;
         }
@@ -29,9 +29,9 @@
                 --text: #f2eeec;
                 --muted: #a59d99;
                 --line: #2f2a2b;
-                --accent: #f06595;
-                --accent-soft: #3a1f29;
-                --timeline: #60a5fa;
+                --accent: #3b82f6;
+                --accent-soft: #1c2740;
+                --timeline: var(--accent);
                 --timeline-idle: #5c5456;
             }
         }
@@ -41,9 +41,9 @@
             --text: #f2eeec;
             --muted: #a59d99;
             --line: #2f2a2b;
-            --accent: #f06595;
-            --accent-soft: #3a1f29;
-            --timeline: #60a5fa;
+            --accent: #3b82f6;
+            --accent-soft: #1c2740;
+            --timeline: var(--accent);
             --timeline-idle: #5c5456;
         }
 
@@ -215,8 +215,8 @@
         <a href="#experience">Experience</a>
         <a href="#skills">Skills</a>
         <a href="#portfolio">Portfolio</a>
-        <a href="#projects">Projects</a>
         <a href="#education">Education</a>
+        <a href="#projects">Projects</a>
         <span class="spacer"></span>
         <button class="btn" onclick="window.print()">Download PDF</button>
     </div>
@@ -350,6 +350,19 @@
         </div>
     </section>
 
+    <!-- EDIT: education -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="edu">
+            <h3>Qualification, Institution</h3>
+            <span>2016 – 2020</span>
+        </div>
+        <div class="edu">
+            <h3>Certificate or course</h3>
+            <span>2023</span>
+        </div>
+    </section>
+
     <!-- EDIT: projects -->
     <section id="projects">
         <h2>Projects</h2>
@@ -374,19 +387,6 @@
                 <p>One line on the problem, one on what you built, one on the result.</p>
                 <a href="#">Link →</a>
             </div>
-        </div>
-    </section>
-
-    <!-- EDIT: education -->
-    <section id="education">
-        <h2>Education</h2>
-        <div class="edu">
-            <h3>Qualification, Institution</h3>
-            <span>2016 – 2020</span>
-        </div>
-        <div class="edu">
-            <h3>Certificate or course</h3>
-            <span>2023</span>
         </div>
     </section>
 
