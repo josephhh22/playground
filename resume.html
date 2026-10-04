@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume and Portfolio</title>
+    <meta name="description" content="Resume and portfolio">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+    <style>
+        /* Edit these colours to restyle the whole page */
+        :root {
+            --bg: #faf8f6;
+            --surface: #ffffff;
+            --text: #1d1b1a;
+            --muted: #6b6461;
+            --line: #e8e2de;
+            --accent: #d6336c;
+            --accent-soft: #fde8ef;
+            --radius: 14px;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #141213;
+                --surface: #1e1b1c;
+                --text: #f2eeec;
+                --muted: #a59d99;
+                --line: #2f2a2b;
+                --accent: #f06595;
+                --accent-soft: #3a1f29;
+            }
+        }
+        :root[data-theme="dark"] {
+            --bg: #141213;
+            --surface: #1e1b1c;
+            --text: #f2eeec;
+            --muted: #a59d99;
+            --line: #2f2a2b;
+            --accent: #f06595;
+            --accent-soft: #3a1f29;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, sans-serif;
+            line-height: 1.6;
+        }
+        .wrap { max-width: 920px; margin: 0 auto; padding: 0 16px; }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        h1, h2 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.2; }
+        h2 {
+            font-size: 1.4rem;
+            margin: 0 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--line);
+        }
+        section { padding: 40px 0 8px; }
+
+        /* Nav */
+        nav {
+            position: sticky; top: 0; z-index: 10;
+            background: color-mix(in srgb, var(--bg) 88%, transparent);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
+        }
+        nav .wrap { display: flex; gap: 20px; align-items: center; height: 56px; overflow-x: auto; }
+        nav a { color: var(--muted); font-size: 0.92rem; font-weight: 500; white-space: nowrap; }
+        nav a:hover { color: var(--text); text-decoration: none; }
+        nav .spacer { flex: 1; }
+        .btn {
+            display: inline-block;
+            background: var(--accent); color: #fff;
+            padding: 8px 16px; border-radius: 999px;
+            font-weight: 600; font-size: 0.9rem; border: 0; cursor: pointer;
+        }
+        .btn:hover { text-decoration: none; filter: brightness(1.08); }
+
+        /* Header */
+        header { padding: 56px 0 16px; }
+        .hero { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+        .avatar {
+            width: 112px; height: 112px; border-radius: 50%;
+            object-fit: cover; border: 4px solid var(--surface);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .initials {
+            display: grid; place-items: center;
+            background: var(--accent); color: #fff;
+            font-family: Fraunces, Georgia, serif; font-size: 2.4rem;
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); margin: 0; }
+        .role { font-size: 1.15rem; color: var(--accent); font-weight: 600; margin: 4px 0 8px; }
+        .contact { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--muted); font-size: 0.92rem; }
+        .summary { font-size: 1.05rem; max-width: 680px; margin-top: 24px; }
+
+        /* Experience */
+        .job { display: grid; grid-template-columns: 150px 1fr; gap: 4px 24px; margin-bottom: 28px; }
+        .job .when { color: var(--muted); font-size: 0.9rem; padding-top: 2px; }
+        .job h3 { margin: 0; font-size: 1.05rem; }
+        .job .org { color: var(--muted); font-weight: 500; }
+        .job ul { margin: 8px 0 0; padding-left: 18px; }
+        .job li { margin-bottom: 4px; }
+
+        /* Skills */
+        .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+        .skill-group h3 { font-size: 0.95rem; margin: 0 0 10px; }
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tag {
+            background: var(--accent-soft); color: var(--text);
+            padding: 4px 12px; border-radius: 999px; font-size: 0.85rem;
+        }
+
+        /* Portfolio */
+        .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .filters button {
+            background: var(--surface); color: var(--muted);
+            border: 1px solid var(--line); border-radius: 999px;
+            padding: 6px 14px; font: inherit; font-size: 0.88rem; cursor: pointer;
+        }
+        .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+        .card {
+            background: var(--surface); border: 1px solid var(--line);
+            border-radius: var(--radius); overflow: hidden;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+        .card button { all: unset; display: block; width: 100%; cursor: zoom-in; }
+        .card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+        .card .body { padding: 12px 14px; }
+        .card h3 { margin: 0; font-size: 0.98rem; }
+        .card p { margin: 2px 0 0; color: var(--muted); font-size: 0.85rem; }
+        .card[hidden] { display: none; }
+
+        /* Projects */
+        .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .project {
+            background: var(--surface); border: 1px solid var(--line);
+            border-radius: var(--radius); padding: 20px;
+        }
+        .project h3 { margin: 0 0 6px; font-size: 1.05rem; }
+        .project p { margin: 0 0 12px; color: var(--muted); font-size: 0.93rem; }
+
+        /* Education */
+        .edu { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 16px; }
+        .edu h3 { margin: 0; font-size: 1.02rem; }
+        .edu span { color: var(--muted); font-size: 0.92rem; }
+
+        footer { padding: 48px 0 40px; color: var(--muted); font-size: 0.88rem; text-align: center; }
+
+        /* Lightbox */
+        dialog {
+            border: 0; padding: 0; background: transparent; max-width: min(90vw, 720px);
+        }
+        dialog::backdrop { background: rgba(0,0,0,0.75); }
+        dialog img { width: 100%; border-radius: var(--radius); display: block; }
+        dialog p { color: #fff; text-align: center; margin: 10px 0 0; }
+
+        @media (max-width: 600px) {
+            header { padding-top: 32px; }
+            .job { grid-template-columns: 1fr; }
+        }
+
+        /* Print: Ctrl/Cmd+P gives a clean one-column resume */
+        @media print {
+            :root { --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #ccc; --accent: #000; --accent-soft: #eee; }
+            nav, .filters, #portfolio .grid, .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            section { padding-top: 16px; break-inside: avoid; }
+            a { color: #000; }
+        }
+        .print-only { display: none; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="wrap">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <span class="spacer"></span>
+        <button class="btn" onclick="window.print()">Download PDF</button>
+    </div>
+</nav>
+
+<main class="wrap">
+
+    <!-- EDIT: name, role, contact details and photo -->
+    <header id="about">
+        <div class="hero">
+            <!-- To use a photo: <img class="avatar" src="images/me.jpg" alt="Your Name"> -->
+            <div class="avatar initials" aria-hidden="true">YN</div>
+            <div>
+                <h1>Your Name</h1>
+                <p class="role">Designer and Maker</p>
+                <div class="contact">
+                    <span>Singapore</span>
+                    <a href="mailto:you@example.com">you@example.com</a>
+                    <a href="https://github.com/josephhh22">github.com/josephhh22</a>
+                    <a href="https://www.linkedin.com/">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+        <p class="summary">
+            Two or three sentences on who you are and what you do best. Mention the kind of work you
+            want next and one result you are proud of, for example "Designed and sold 13 original bead
+            art pieces through my own online shop."
+        </p>
+    </header>
+
+    <!-- EDIT: replace with your real roles, most recent first -->
+    <section id="experience">
+        <h2>Experience</h2>
+
+        <div class="job">
+            <div class="when">2024 – Present</div>
+            <div>
+                <h3>Founder <span class="org">· A Bead of Fun</span></h3>
+                <ul>
+                    <li>Designed and produced a catalogue of 13 bead art products, from characters to custom name pieces.</li>
+                    <li>Built and ran the shop website on GitHub Pages, including product photography and copy.</li>
+                    <li>Handled pricing, custom orders and customer messages end to end.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="when">2022 – 2024</div>
+            <div>
+                <h3>Job Title <span class="org">· Company Name</span></h3>
+                <ul>
+                    <li>Start each point with a verb and end it with a number or outcome.</li>
+                    <li>Keep to three or four points per role.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="job">
+            <div class="when">2020 – 2022</div>
+            <div>
+                <h3>Job Title <span class="org">· Company Name</span></h3>
+                <ul>
+                    <li>What you did, and what changed because of it.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDIT: skills -->
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills">
+            <div class="skill-group">
+                <h3>Craft and design</h3>
+                <div class="tags">
+                    <span class="tag">Bead art</span>
+                    <span class="tag">Pattern design</span>
+                    <span class="tag">Colour theory</span>
+                    <span class="tag">Product photography</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Digital</h3>
+                <div class="tags">
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">GitHub Pages</span>
+                    <span class="tag">Canva</span>
+                </div>
+            </div>
+            <div class="skill-group">
+                <h3>Business</h3>
+                <div class="tags">
+                    <span class="tag">Pricing</span>
+                    <span class="tag">Custom orders</span>
+                    <span class="tag">Customer service</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio: add a card per piece. data-cat must match a filter button -->
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <p class="print-only">Full portfolio with photos: josephhh22.github.io/resume.html#portfolio</p>
+        <div class="filters" role="group" aria-label="Filter portfolio">
+            <button aria-pressed="true" data-filter="all">All</button>
+            <button aria-pressed="false" data-filter="heroes">Heroes</button>
+            <button aria-pressed="false" data-filter="games">Games and anime</button>
+            <button aria-pressed="false" data-filter="cute">Cute</button>
+            <button aria-pressed="false" data-filter="custom">Custom</button>
+        </div>
+        <div class="grid">
+            <div class="card" data-cat="heroes"><button><img src="images/iron_man.jpg" alt="Iron Man bead art" loading="lazy"><div class="body"><h3>Iron Man</h3><p>Character piece</p></div></button></div>
+            <div class="card" data-cat="heroes"><button><img src="images/captain_america.jpg" alt="Captain America bead art" loading="lazy"><div class="body"><h3>Captain America</h3><p>Character piece</p></div></button></div>
+            <div class="card" data-cat="games"><button><img src="images/pikachu.jpg" alt="Pikachu bead art" loading="lazy"><div class="body"><h3>Pikachu</h3><p>Character piece</p></div></button></div>
+            <div class="card" data-cat="games"><button><img src="images/pokemon_starter_pack.jpeg" alt="Pokemon starter pack bead art" loading="lazy"><div class="body"><h3>Pokémon Starter Pack</h3><p>Set of three</p></div></button></div>
+            <div class="card" data-cat="games"><button><img src="images/mario.jpg" alt="Mario bead art" loading="lazy"><div class="body"><h3>Mario</h3><p>Character piece</p></div></button></div>
+            <div class="card" data-cat="cute"><button><img src="images/my_melody.jpg" alt="My Melody bead art" loading="lazy"><div class="body"><h3>My Melody</h3><p>Character piece</p></div></button></div>
+            <div class="card" data-cat="cute"><button><img src="images/unicorn.jpg" alt="Unicorn bead art" loading="lazy"><div class="body"><h3>Unicorn</h3><p>Original design</p></div></button></div>
+            <div class="card" data-cat="cute"><button><img src="images/snake.jpg" alt="Snake bead art" loading="lazy"><div class="body"><h3>Snake</h3><p>Original design</p></div></button></div>
+            <div class="card" data-cat="cute"><button><img src="images/heart.jpg" alt="Heart bead art" loading="lazy"><div class="body"><h3>Heart</h3><p>Original design</p></div></button></div>
+            <div class="card" data-cat="custom"><button><img src="images/fortune.jpg" alt="Fortune bead art" loading="lazy"><div class="body"><h3>Fortune</h3><p>Seasonal piece</p></div></button></div>
+            <div class="card" data-cat="custom"><button><img src="images/custom_made_names.jpeg" alt="Custom name bead art" loading="lazy"><div class="body"><h3>Custom Names</h3><p>Made to order</p></div></button></div>
+            <div class="card" data-cat="custom"><button><img src="images/mini_bits.jpeg" alt="Mini bead pieces" loading="lazy"><div class="body"><h3>Mini Bits</h3><p>Small format series</p></div></button></div>
+        </div>
+    </section>
+
+    <!-- EDIT: projects -->
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects">
+            <div class="project">
+                <h3>A Bead of Fun shop</h3>
+                <p>Online catalogue for my bead art, built with HTML and CSS and hosted on GitHub Pages.</p>
+                <a href="index.html">Visit the shop →</a>
+            </div>
+            <div class="project">
+                <h3>This resume site</h3>
+                <p>A single-page resume and portfolio that also prints as a clean PDF.</p>
+                <a href="https://github.com/josephhh22/josephhh22.github.io">View source →</a>
+            </div>
+            <div class="project">
+                <h3>Project name</h3>
+                <p>One line on the problem, one on what you built, one on the result.</p>
+                <a href="#">Link →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDIT: education -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="edu">
+            <h3>Qualification, Institution</h3>
+            <span>2016 – 2020</span>
+        </div>
+        <div class="edu">
+            <h3>Certificate or course</h3>
+            <span>2023</span>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="wrap">© <span id="year"></span> Your Name · <a href="index.html">A Bead of Fun</a></div>
+</footer>
+
+<dialog id="lightbox" aria-label="Image preview">
+    <img src="" alt="">
+    <p></p>
+</dialog>
+
+<script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Portfolio filters
+    const filterButtons = document.querySelectorAll('.filters button');
+    const cards = document.querySelectorAll('.card');
+    filterButtons.forEach(btn => btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.setAttribute('aria-pressed', b === btn));
+        const f = btn.dataset.filter;
+        cards.forEach(c => { c.hidden = f !== 'all' && c.dataset.cat !== f; });
+    }));
+
+    // Lightbox: click a card to enlarge, click anywhere to close
+    const box = document.getElementById('lightbox');
+    cards.forEach(card => card.querySelector('button').addEventListener('click', () => {
+        const img = card.querySelector('img');
+        box.querySelector('img').src = img.src;
+        box.querySelector('img').alt = img.alt;
+        box.querySelector('p').textContent = card.querySelector('h3').textContent;
+        box.showModal();
+    }));
+    box.addEventListener('click', () => box.close());
+</script>
+
+</body>
+</html>
