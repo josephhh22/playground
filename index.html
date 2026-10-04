@@ -145,6 +145,9 @@
         }
         .project h3 { margin: 0 0 6px; font-size: 1.05rem; }
         .project p { margin: 0 0 12px; color: var(--muted); font-size: 0.93rem; }
+        .project.clickable { position: relative; transition: border-color 0.15s, transform 0.15s; }
+        .project.clickable:hover { border-color: var(--accent); transform: translateY(-2px); }
+        .project.clickable a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 
         /* Education */
         .edu { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 16px; }
@@ -319,6 +322,11 @@
     <section id="projects">
         <h2>Projects</h2>
         <div class="projects">
+            <div class="project clickable">
+                <h3>Pillow Fort Defence</h3>
+                <p>A browser tower defence game. Keep the bedtime monsters out of the pillow fort across six rooms. Plays on desktop and mobile.</p>
+                <a href="projects/pillow-fort-defence.html" target="_blank" rel="noopener">Play the game →</a>
+            </div>
             <div class="project">
                 <h3>A Bead of Fun shop</h3>
                 <p>Online catalogue for my bead art, built with HTML and CSS and hosted on GitHub Pages.</p>
