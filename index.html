@@ -107,7 +107,8 @@
         /* Experience */
         .job { display: grid; grid-template-columns: 150px 1fr; gap: 4px 24px; margin-bottom: 28px; }
         .job .when { color: var(--muted); font-size: 0.9rem; padding-top: 2px; }
-        .job h3 { margin: 0; font-size: 1.05rem; }
+        .job h3 { margin: 0; font-size: 1.05rem; display: flex; align-items: center; gap: 10px; }
+        .job .logo { width: 28px; height: 28px; border-radius: 7px; flex: none; }
         .job .org { color: var(--muted); font-weight: 500; }
         .job ul { margin: 8px 0 0; padding-left: 18px; }
         .job li { margin-bottom: 4px; }
@@ -141,26 +142,15 @@
         }
 
         /* Portfolio */
-        .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-        .filters button {
-            background: var(--surface); color: var(--muted);
-            border: 1px solid var(--line); border-radius: 999px;
-            padding: 6px 14px; font: inherit; font-size: 0.88rem; cursor: pointer;
-        }
-        .filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
         .card {
             background: var(--surface); border: 1px solid var(--line);
             border-radius: var(--radius); overflow: hidden;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
         }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
-        .card button { all: unset; display: block; width: 100%; cursor: zoom-in; }
-        .card img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
-        .card .body { padding: 12px 14px; }
-        .card h3 { margin: 0; font-size: 0.98rem; }
-        .card p { margin: 2px 0 0; color: var(--muted); font-size: 0.85rem; }
-        .card[hidden] { display: none; }
+        .card .thumb { aspect-ratio: 1; background: var(--line); }
+        .card .body { padding: 12px 14px; display: grid; gap: 8px; }
+        .card .body span { height: 10px; border-radius: 5px; background: var(--line); }
+        .card .body span + span { width: 60%; }
 
         /* Projects */
         .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
@@ -181,14 +171,6 @@
 
         footer { padding: 48px 0 40px; color: var(--muted); font-size: 0.88rem; text-align: center; }
 
-        /* Lightbox */
-        dialog {
-            border: 0; padding: 0; background: transparent; max-width: min(90vw, 720px);
-        }
-        dialog::backdrop { background: rgba(0,0,0,0.75); }
-        dialog img { width: 100%; border-radius: var(--radius); display: block; }
-        dialog p { color: #fff; text-align: center; margin: 10px 0 0; }
-
         @media (max-width: 600px) {
             header { padding-top: 32px; }
             .job { grid-template-columns: 1fr; }
@@ -199,12 +181,10 @@
         /* Print: Ctrl/Cmd+P gives a clean one-column resume */
         @media print {
             :root { --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #ccc; --accent: #000; --accent-soft: #eee; }
-            nav, .filters, #portfolio .grid, .no-print, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
-            .print-only { display: block !important; }
+            nav, #portfolio, .no-print, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
             section { padding-top: 16px; break-inside: avoid; }
             a { color: #000; }
         }
-        .print-only { display: none; }
     </style>
 </head>
 <body>
@@ -213,10 +193,10 @@
     <div class="wrap">
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
         <a href="#portfolio">Portfolio</a>
         <a href="#education">Education</a>
-        <a href="#projects">Projects</a>
+        <a href="#projects">Personal Projects</a>
+        <a href="#skills">Skills</a>
         <span class="spacer"></span>
         <button class="btn" onclick="window.print()">Download PDF</button>
     </div>
@@ -258,7 +238,7 @@
             <div class="job">
                 <div class="when">2024 – Present</div>
                 <div>
-                    <h3>Founder <span class="org">· A Bead of Fun</span></h3>
+                    <h3><img class="logo" src="images/logos/bead-of-fun.svg" alt="A Bead of Fun logo" width="28" height="28"><span>Founder <span class="org">· A Bead of Fun</span></span></h3>
                     <ul>
                         <li>Designed and produced a catalogue of 13 bead art products, from characters to custom name pieces.</li>
                         <li>Built and ran the shop website on GitHub Pages, including product photography and copy.</li>
@@ -268,24 +248,107 @@
             </div>
 
             <div class="job">
-                <div class="when">2022 – 2024</div>
+                <div class="when">2021 – 2024</div>
                 <div>
-                    <h3>Job Title <span class="org">· Company Name</span></h3>
+                    <h3><img class="logo" src="images/logos/harbourline-bank.svg" alt="Harbourline Bank logo" width="28" height="28"><span>Vice President, Digital Banking <span class="org">· Harbourline Bank</span></span></h3>
                     <ul>
-                        <li>Start each point with a verb and end it with a number or outcome.</li>
-                        <li>Keep to three or four points per role.</li>
+                        <li>Led a team of 8 rebuilding the retail mobile app, lifting monthly active users by 35%.</li>
+                        <li>Cut account-opening time from 3 days to 20 minutes with an end-to-end digital onboarding flow.</li>
+                        <li>Owned a S$4m annual budget and quarterly roadmap reporting to the COO.</li>
                     </ul>
                 </div>
             </div>
 
             <div class="job">
-                <div class="when">2020 – 2022</div>
+                <div class="when">2018 – 2021</div>
                 <div>
-                    <h3>Job Title <span class="org">· Company Name</span></h3>
+                    <h3><img class="logo" src="images/logos/meridian-capital.svg" alt="Meridian Capital logo" width="28" height="28"><span>Associate, Corporate Finance <span class="org">· Meridian Capital</span></span></h3>
                     <ul>
-                        <li>What you did, and what changed because of it.</li>
+                        <li>Built valuation models for 12 mid-market M&amp;A deals worth S$600m in total.</li>
+                        <li>Automated monthly portfolio reporting, saving the team 40 hours a month.</li>
                     </ul>
                 </div>
+            </div>
+
+            <div class="job">
+                <div class="when">2015 – 2018</div>
+                <div>
+                    <h3><img class="logo" src="images/logos/northgate-trust.svg" alt="Northgate Trust logo" width="28" height="28"><span>Analyst, Risk and Compliance <span class="org">· Northgate Trust</span></span></h3>
+                    <ul>
+                        <li>Reviewed credit exposure across 300+ SME accounts and flagged S$12m of at-risk lending early.</li>
+                        <li>Rewrote the KYC checklist used by 5 branches, halving audit findings year on year.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="job">
+                <div class="when">2013 – 2015</div>
+                <div>
+                    <h3><img class="logo" src="images/logos/aster-private-bank.svg" alt="Aster Private Bank logo" width="28" height="28"><span>Graduate Analyst, Wealth Management <span class="org">· Aster Private Bank</span></span></h3>
+                    <ul>
+                        <li>Rotated through investment advisory, operations and client service.</li>
+                        <li>Prepared portfolio reviews for 40 high-net-worth clients.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio: add a card per piece. data-cat must match a filter button -->
+    <section id="portfolio">
+        <h2>Portfolio</h2>
+        <div class="grid">
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
+        </div>
+    </section>
+
+    <!-- EDIT: education -->
+    <section id="education">
+        <h2>Education</h2>
+        <div class="edu">
+            <h3>Qualification, Institution</h3>
+            <span>2009 – 2013</span>
+        </div>
+        <div class="edu">
+            <h3>Certificate or course</h3>
+            <span>2023</span>
+        </div>
+    </section>
+
+    <!-- EDIT: projects -->
+    <section id="projects">
+        <h2>Personal Projects</h2>
+        <div class="projects">
+            <div class="project clickable">
+                <h3>Pillow Fort Defence</h3>
+                <p>A browser tower defence game. Keep the bedtime monsters out of the pillow fort across six rooms. Plays on desktop and mobile.</p>
+                <a href="projects/pillow-fort-defence.html" target="_blank" rel="noopener">Play the game →</a>
+            </div>
+            <div class="project">
+                <h3>A Bead of Fun shop</h3>
+                <p>Online catalogue for my bead art, built with HTML and CSS and hosted on GitHub Pages.</p>
+                <a href="index.html">Visit the shop →</a>
+            </div>
+            <div class="project">
+                <h3>This resume site</h3>
+                <p>A single-page resume and portfolio that also prints as a clean PDF.</p>
+                <a href="https://github.com/josephhh22/josephhh22.github.io">View source →</a>
+            </div>
+            <div class="project">
+                <h3>Project name</h3>
+                <p>One line on the problem, one on what you built, one on the result.</p>
+                <a href="#">Link →</a>
             </div>
         </div>
     </section>
@@ -323,106 +386,14 @@
         </div>
     </section>
 
-    <!-- Portfolio: add a card per piece. data-cat must match a filter button -->
-    <section id="portfolio">
-        <h2>Portfolio</h2>
-        <p class="print-only">Full portfolio with photos: josephhh22.github.io/resume.html#portfolio</p>
-        <div class="filters" role="group" aria-label="Filter portfolio">
-            <button aria-pressed="true" data-filter="all">All</button>
-            <button aria-pressed="false" data-filter="heroes">Heroes</button>
-            <button aria-pressed="false" data-filter="games">Games and anime</button>
-            <button aria-pressed="false" data-filter="cute">Cute</button>
-            <button aria-pressed="false" data-filter="custom">Custom</button>
-        </div>
-        <div class="grid">
-            <div class="card" data-cat="heroes"><button><img src="images/iron_man.jpg" alt="Iron Man bead art" loading="lazy"><div class="body"><h3>Iron Man</h3><p>Character piece</p></div></button></div>
-            <div class="card" data-cat="heroes"><button><img src="images/captain_america.jpg" alt="Captain America bead art" loading="lazy"><div class="body"><h3>Captain America</h3><p>Character piece</p></div></button></div>
-            <div class="card" data-cat="games"><button><img src="images/pikachu.jpg" alt="Pikachu bead art" loading="lazy"><div class="body"><h3>Pikachu</h3><p>Character piece</p></div></button></div>
-            <div class="card" data-cat="games"><button><img src="images/pokemon_starter_pack.jpeg" alt="Pokemon starter pack bead art" loading="lazy"><div class="body"><h3>Pokémon Starter Pack</h3><p>Set of three</p></div></button></div>
-            <div class="card" data-cat="games"><button><img src="images/mario.jpg" alt="Mario bead art" loading="lazy"><div class="body"><h3>Mario</h3><p>Character piece</p></div></button></div>
-            <div class="card" data-cat="cute"><button><img src="images/my_melody.jpg" alt="My Melody bead art" loading="lazy"><div class="body"><h3>My Melody</h3><p>Character piece</p></div></button></div>
-            <div class="card" data-cat="cute"><button><img src="images/unicorn.jpg" alt="Unicorn bead art" loading="lazy"><div class="body"><h3>Unicorn</h3><p>Original design</p></div></button></div>
-            <div class="card" data-cat="cute"><button><img src="images/snake.jpg" alt="Snake bead art" loading="lazy"><div class="body"><h3>Snake</h3><p>Original design</p></div></button></div>
-            <div class="card" data-cat="cute"><button><img src="images/heart.jpg" alt="Heart bead art" loading="lazy"><div class="body"><h3>Heart</h3><p>Original design</p></div></button></div>
-            <div class="card" data-cat="custom"><button><img src="images/fortune.jpg" alt="Fortune bead art" loading="lazy"><div class="body"><h3>Fortune</h3><p>Seasonal piece</p></div></button></div>
-            <div class="card" data-cat="custom"><button><img src="images/custom_made_names.jpeg" alt="Custom name bead art" loading="lazy"><div class="body"><h3>Custom Names</h3><p>Made to order</p></div></button></div>
-            <div class="card" data-cat="custom"><button><img src="images/mini_bits.jpeg" alt="Mini bead pieces" loading="lazy"><div class="body"><h3>Mini Bits</h3><p>Small format series</p></div></button></div>
-        </div>
-    </section>
-
-    <!-- EDIT: education -->
-    <section id="education">
-        <h2>Education</h2>
-        <div class="edu">
-            <h3>Qualification, Institution</h3>
-            <span>2016 – 2020</span>
-        </div>
-        <div class="edu">
-            <h3>Certificate or course</h3>
-            <span>2023</span>
-        </div>
-    </section>
-
-    <!-- EDIT: projects -->
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="projects">
-            <div class="project clickable">
-                <h3>Pillow Fort Defence</h3>
-                <p>A browser tower defence game. Keep the bedtime monsters out of the pillow fort across six rooms. Plays on desktop and mobile.</p>
-                <a href="projects/pillow-fort-defence.html" target="_blank" rel="noopener">Play the game →</a>
-            </div>
-            <div class="project">
-                <h3>A Bead of Fun shop</h3>
-                <p>Online catalogue for my bead art, built with HTML and CSS and hosted on GitHub Pages.</p>
-                <a href="index.html">Visit the shop →</a>
-            </div>
-            <div class="project">
-                <h3>This resume site</h3>
-                <p>A single-page resume and portfolio that also prints as a clean PDF.</p>
-                <a href="https://github.com/josephhh22/josephhh22.github.io">View source →</a>
-            </div>
-            <div class="project">
-                <h3>Project name</h3>
-                <p>One line on the problem, one on what you built, one on the result.</p>
-                <a href="#">Link →</a>
-            </div>
-        </div>
-    </section>
-
 </main>
 
 <footer>
     <div class="wrap">© <span id="year"></span> Your Name · <a href="index.html">A Bead of Fun</a></div>
 </footer>
 
-<dialog id="lightbox" aria-label="Image preview">
-    <img src="" alt="">
-    <p></p>
-</dialog>
-
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Portfolio filters
-    const filterButtons = document.querySelectorAll('.filters button');
-    const cards = document.querySelectorAll('.card');
-    filterButtons.forEach(btn => btn.addEventListener('click', () => {
-        filterButtons.forEach(b => b.setAttribute('aria-pressed', b === btn));
-        const f = btn.dataset.filter;
-        cards.forEach(c => { c.hidden = f !== 'all' && c.dataset.cat !== f; });
-    }));
-
-    // Lightbox: click a card to enlarge, click anywhere to close
-    const box = document.getElementById('lightbox');
-    cards.forEach(card => card.querySelector('button').addEventListener('click', () => {
-        const img = card.querySelector('img');
-        box.querySelector('img').src = img.src;
-        box.querySelector('img').alt = img.alt;
-        box.querySelector('p').textContent = card.querySelector('h3').textContent;
-        box.showModal();
-    }));
-    box.addEventListener('click', () => box.close());
 
     // Timeline: fill the rail up to a line 60% down the viewport
     const timeline = document.querySelector('.timeline');
