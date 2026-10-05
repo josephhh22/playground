@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume and Portfolio</title>
-    <meta name="description" content="Resume and portfolio">
+    <title>Resume</title>
+    <meta name="description" content="Resume">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
@@ -132,25 +132,28 @@
         }
         .timeline-fill { height: var(--fill); background: var(--timeline); border-radius: 2px; }
 
-        /* Skills */
-        .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
-        .skill-group h3 { font-size: 0.95rem; margin: 0 0 10px; }
-        .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-        .tag {
-            background: var(--accent-soft); color: var(--text);
-            padding: 4px 12px; border-radius: 999px; font-size: 0.85rem;
+        /* Education */
+        .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .pills button {
+            background: var(--surface); color: var(--muted);
+            border: 1px solid var(--line); border-radius: 999px;
+            padding: 6px 16px; font: inherit; font-size: 0.9rem; font-weight: 500; cursor: pointer;
         }
-
-        /* Portfolio */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; }
+        .pills button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .pills button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+        .grid[hidden] { display: none; }
         .card {
             background: var(--surface); border: 1px solid var(--line);
-            border-radius: var(--radius); overflow: hidden;
+            border-radius: var(--radius); padding: 18px 20px;
         }
-        .card .thumb { aspect-ratio: 1; background: var(--line); }
-        .card .body { padding: 12px 14px; display: grid; gap: 8px; }
-        .card .body span { height: 10px; border-radius: 5px; background: var(--line); }
-        .card .body span + span { width: 60%; }
+        .card .year {
+            display: inline-block; background: var(--accent-soft); color: var(--text);
+            border-radius: 999px; padding: 2px 10px; font-size: 0.8rem; font-weight: 500;
+        }
+        .card h3 { margin: 10px 0 2px; font-size: 1rem; }
+        .card .inst { margin: 0; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
+        .card p { margin: 8px 0 0; font-size: 0.9rem; }
 
         /* Projects */
         .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
@@ -165,9 +168,6 @@
         .project.clickable a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 
         /* Education */
-        .edu { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 16px; }
-        .edu h3 { margin: 0; font-size: 1.02rem; }
-        .edu span { color: var(--muted); font-size: 0.92rem; }
 
         footer { padding: 48px 0 40px; color: var(--muted); font-size: 0.88rem; text-align: center; }
 
@@ -181,8 +181,9 @@
         /* Print: Ctrl/Cmd+P gives a clean one-column resume */
         @media print {
             :root { --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #ccc; --accent: #000; --accent-soft: #eee; }
-            nav, #portfolio, .no-print, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
+            nav, .pills, .no-print, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
             section { padding-top: 16px; break-inside: avoid; }
+            [role="tabpanel"][hidden] { display: grid !important; margin-top: 16px; }
             a { color: #000; }
         }
     </style>
@@ -193,10 +194,8 @@
     <div class="wrap">
         <a href="#about">About</a>
         <a href="#experience">Experience</a>
-        <a href="#portfolio">Portfolio</a>
         <a href="#education">Education</a>
         <a href="#projects">Personal Projects</a>
-        <a href="#skills">Skills</a>
         <span class="spacer"></span>
         <button class="btn" onclick="window.print()">Download PDF</button>
     </div>
@@ -294,35 +293,58 @@
         </div>
     </section>
 
-    <!-- Portfolio: add a card per piece. data-cat must match a filter button -->
-    <section id="portfolio">
-        <h2>Portfolio</h2>
-        <div class="grid">
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-            <div class="card placeholder" aria-hidden="true"><div class="thumb"></div><div class="body"><span></span><span></span></div></div>
-        </div>
-    </section>
-
-    <!-- EDIT: education -->
+    <!-- EDIT: education. Each pill shows its own panel -->
     <section id="education">
         <h2>Education</h2>
-        <div class="edu">
-            <h3>Qualification, Institution</h3>
-            <span>2009 – 2013</span>
+        <div class="pills" role="tablist" aria-label="Education type">
+            <button role="tab" id="tab-formal" aria-selected="true" aria-controls="panel-formal">Formal Education</button>
+            <button role="tab" id="tab-continuing" aria-selected="false" aria-controls="panel-continuing" tabindex="-1">Continuing Education</button>
         </div>
-        <div class="edu">
-            <h3>Certificate or course</h3>
-            <span>2023</span>
+        <div class="grid" role="tabpanel" id="panel-formal" aria-labelledby="tab-formal">
+                <div class="card">
+                    <span class="year">2011 – 2013</span>
+                    <h3>Master of Business Administration (Finance)</h3>
+                    <p class="inst">Harbour City Business School</p>
+                    <p>Dean's List. Capstone on credit risk in SME lending.</p>
+                </div>
+                <div class="card">
+                    <span class="year">2007 – 2011</span>
+                    <h3>Bachelor of Commerce, Banking and Finance</h3>
+                    <p class="inst">Eastbridge University</p>
+                    <p>Second Upper Honours. Treasurer of the Finance Society.</p>
+                </div>
+                <div class="card">
+                    <span class="year">2005 – 2006</span>
+                    <h3>GCE A-Levels</h3>
+                    <p class="inst">Riverside Junior College</p>
+                    <p>Economics, Mathematics, Chemistry, General Paper.</p>
+                </div>
+        </div>
+        <div class="grid" role="tabpanel" id="panel-continuing" aria-labelledby="tab-continuing" hidden>
+                <div class="card">
+                    <span class="year">2023</span>
+                    <h3>Professional Certificate in Digital Banking</h3>
+                    <p class="inst">Asia Finance Institute</p>
+                    <p>Open banking, payments infrastructure and digital product strategy.</p>
+                </div>
+                <div class="card">
+                    <span class="year">2022</span>
+                    <h3>Data Analytics with Python</h3>
+                    <p class="inst">Lumen Academy</p>
+                    <p>Pandas, SQL and dashboarding for financial reporting.</p>
+                </div>
+                <div class="card">
+                    <span class="year">2021</span>
+                    <h3>Certified Agile Product Owner</h3>
+                    <p class="inst">Northstar Agile Guild</p>
+                    <p>Backlog management, sprint planning and stakeholder reviews.</p>
+                </div>
+                <div class="card">
+                    <span class="year">2019</span>
+                    <h3>Anti-Money Laundering Specialist</h3>
+                    <p class="inst">Compliance Academy Asia</p>
+                    <p>Transaction monitoring, sanctions screening and case review.</p>
+                </div>
         </div>
     </section>
 
@@ -353,39 +375,6 @@
         </div>
     </section>
 
-    <!-- EDIT: skills -->
-    <section id="skills">
-        <h2>Skills</h2>
-        <div class="skills">
-            <div class="skill-group">
-                <h3>Craft and design</h3>
-                <div class="tags">
-                    <span class="tag">Bead art</span>
-                    <span class="tag">Pattern design</span>
-                    <span class="tag">Colour theory</span>
-                    <span class="tag">Product photography</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <h3>Digital</h3>
-                <div class="tags">
-                    <span class="tag">HTML</span>
-                    <span class="tag">CSS</span>
-                    <span class="tag">GitHub Pages</span>
-                    <span class="tag">Canva</span>
-                </div>
-            </div>
-            <div class="skill-group">
-                <h3>Business</h3>
-                <div class="tags">
-                    <span class="tag">Pricing</span>
-                    <span class="tag">Custom orders</span>
-                    <span class="tag">Customer service</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
 </main>
 
 <footer>
@@ -394,6 +383,24 @@
 
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Education pills: show the panel for the selected pill
+    const tabs = [...document.querySelectorAll('.pills [role="tab"]')];
+    const selectTab = tab => tabs.forEach(t => {
+        const on = t === tab;
+        t.setAttribute('aria-selected', on);
+        t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    tabs.forEach((tab, i) => {
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', e => {
+            const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+            if (!step) return;
+            const next = tabs[(i + step + tabs.length) % tabs.length];
+            selectTab(next); next.focus();
+        });
+    });
 
     // Timeline: fill the rail up to a line 60% down the viewport
     const timeline = document.querySelector('.timeline');
