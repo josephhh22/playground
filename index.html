@@ -191,8 +191,11 @@
         /* Print: Ctrl/Cmd+P gives a clean one-column resume */
         @media print {
             :root { --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #ccc; --accent: #000; --accent-soft: #eee; }
-            nav, .pills, .no-print, #projects, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
-            section { padding-top: 16px; break-inside: avoid; }
+            nav, footer, .pills, .no-print, #projects, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
+            /* Let sections flow across pages; keep single roles and entries whole */
+            section { padding-top: 16px; }
+            h2 { break-after: avoid; }
+            .job { break-inside: avoid; }
             /* Education prints as a plain list: both panels, no boxes */
             [role="tabpanel"], [role="tabpanel"][hidden] { display: block !important; margin-bottom: 14px; }
             [role="tabpanel"]::before {
