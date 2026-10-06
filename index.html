@@ -191,9 +191,22 @@
         /* Print: Ctrl/Cmd+P gives a clean one-column resume */
         @media print {
             :root { --bg: #fff; --surface: #fff; --text: #000; --muted: #444; --line: #ccc; --accent: #000; --accent-soft: #eee; }
-            nav, .pills, .no-print, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
+            nav, .pills, .no-print, #projects, .timeline-rail, .timeline-fill, .timeline .job::before { display: none !important; }
             section { padding-top: 16px; break-inside: avoid; }
-            [role="tabpanel"][hidden] { display: grid !important; margin-top: 16px; }
+            /* Education prints as a plain list: both panels, no boxes */
+            [role="tabpanel"], [role="tabpanel"][hidden] { display: block !important; margin-bottom: 14px; }
+            [role="tabpanel"]::before {
+                content: attr(data-label); display: block; margin-bottom: 6px;
+                font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted);
+            }
+            .card {
+                display: grid; grid-template-columns: 1fr auto; column-gap: 16px;
+                border: 0; border-radius: 0; padding: 0; margin-bottom: 10px; break-inside: avoid;
+            }
+            .card .year { grid-column: 2; grid-row: 1; background: none; padding: 0; font-size: 0.9rem; color: var(--muted); }
+            .card h3 { grid-column: 1; grid-row: 1; margin: 0; font-size: 1rem; }
+            .card .inst, .card p { grid-column: 1 / -1; }
+            .card p { margin: 2px 0 0; }
             a { color: #000; }
         }
     </style>
@@ -314,7 +327,7 @@
             <button role="tab" id="tab-formal" aria-selected="true" aria-controls="panel-formal">Formal</button>
             <button role="tab" id="tab-continuing" aria-selected="false" aria-controls="panel-continuing" tabindex="-1">Other Certification</button>
         </div>
-        <div class="grid" role="tabpanel" id="panel-formal" aria-labelledby="tab-formal">
+        <div class="grid" role="tabpanel" id="panel-formal" aria-labelledby="tab-formal" data-label="Formal">
                 <div class="card">
                     <span class="year">2011 – 2013</span>
                     <h3>Master of Business Administration (Finance)</h3>
@@ -334,7 +347,7 @@
                     <p>Economics, Mathematics, Chemistry, General Paper.</p>
                 </div>
         </div>
-        <div class="grid" role="tabpanel" id="panel-continuing" aria-labelledby="tab-continuing" hidden>
+        <div class="grid" role="tabpanel" id="panel-continuing" aria-labelledby="tab-continuing" data-label="Other Certification" hidden>
                 <div class="card">
                     <span class="year">2023</span>
                     <h3>Professional Certificate in Digital Banking</h3>
